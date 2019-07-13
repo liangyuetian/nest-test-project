@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
 async function bootstrap() {
+    const port = 4000;
     const app = await NestFactory.create(AppModule);
-    await app.listen(3000, () => {
-        console.log('http://localhost:3000');
+    // app.enableShutdownHooks(); // 监听应用程序关闭
+    await app.listen(port, () => {
+        console.log(`http://localhost:${port}`);
     });
 }
 
