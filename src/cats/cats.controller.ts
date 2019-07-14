@@ -4,6 +4,7 @@ import {
     Query,
     Headers, Header,
 } from '@nestjs/common';
+import { Connection } from 'typeorm';
 import { RolesGuard } from '../guard/roles.guard';
 import { Request, Response, NextFunction } from 'express';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
@@ -13,6 +14,10 @@ import { Cats } from './cats.decorator';
 @Controller('cats')
 @UseGuards(RolesGuard)
 export class CatsController {
+    constructor(private readonly connection: Connection) {
+
+    }
+
     @Get()
     @SetMetadata('roles', ['admin'])
     getCats(
