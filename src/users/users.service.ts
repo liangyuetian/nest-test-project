@@ -1,28 +1,32 @@
-import { Injectable , HttpException, HttpStatus} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+
+export type User = any;
 
 @Injectable()
 export class UsersService {
-    private users = [
-        { id: 1, name: 'John Doe' },
-        { id: 2, name: 'Alice Caeiro' },
-        { id: 3, name: 'Who Knows' },
-    ];
+    private readonly users: User[];
 
-    getAllUsers() {
-        return Promise.resolve(this.users);
+    constructor() {
+        this.users = [
+            {
+                userId: 1,
+                username: 'john',
+                password: 'changeme',
+            },
+            {
+                userId: 2,
+                username: 'chris',
+                password: 'secret',
+            },
+            {
+                userId: 3,
+                username: 'maria',
+                password: 'guess',
+            },
+        ];
     }
 
-    getUser(id: number) {
-        const user = this.users.find((user: any) => user.id === id);
-        if (!user) {
-            // throw new HttpException('User not found', 404);
-            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-        }
-        return Promise.resolve(user);
-    }
-
-    addUser(user) {
-        this.users.push(user);
-        return Promise.resolve();
+    async findOne(username: string): Promise<User | undefined> {
+        return this.users.find(user => user.username === username);
     }
 }
