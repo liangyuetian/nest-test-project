@@ -2,8 +2,9 @@ import {
     Controller,
     UseGuards, Get, Post, HttpStatus, Param, Body, Req, Res, Next, SetMetadata, UseInterceptors,
     Query,
-    Headers, Header,
+    Headers, Header, UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Connection } from 'typeorm';
 import { RolesGuard } from '../guard/roles.guard';
 import { Request, Response, NextFunction } from 'express';
@@ -56,5 +57,23 @@ export class CatsController {
             query,
             cats,
         });
+    }
+
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file'))
+    uploadFile(
+        @UploadedFile() file,
+        @Req() req: Request,
+        @Res() res: Response,
+        @Next() next: NextFunction,
+    ) {
+        // console.log('file', file);
+        // console.log('file-req', req);
+        res.status(HttpStatus.OK).json({
+            msg: '上传成功',
+        });
+        // next((err) => {
+        //     console.log('错了', err);
+        // });
     }
 }
