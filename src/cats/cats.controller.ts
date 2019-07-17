@@ -10,6 +10,7 @@ import { RolesGuard } from '../guard/roles.guard';
 import { Request, Response, NextFunction } from 'express';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
+import { CatsVo } from './vo/cats.vo';
 
 // @UseInterceptors(LoggingInterceptor)
 @Controller('cats')
@@ -22,16 +23,20 @@ export class CatsController {
     @Get()
     @SetMetadata('roles', ['admin'])
     getCats(
-        @Query() query: any,
+        @Query() query: CatsVo,
         @Req() req: Request,
         @Res() res: Response,
         @Next() next: NextFunction) {
-        return res.status(HttpStatus.OK).json({
+        // res.status(HttpStatus.OK).json({
+        //     title: 'cats',
+        //     path: '/',
+        //     query,
+        // });
+        res.status(HttpStatus.OK).send({
             title: 'cats',
             path: '/',
             query,
         });
-        // res.status(HttpStatus.CREATED).send();
     }
 
     @Get('/:id')
