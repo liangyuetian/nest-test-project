@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -21,12 +22,23 @@ import { PhotoModule } from './photo/photo.module';
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true,
         }),
+        CacheModule.register({
+            ttl: 5, // seconds
+            max: 10, // 缓存中的最大项目数
+        }),
         PhotoModule],
     controllers: [AppController, UserController],
-    providers: [AppService, {
-        provide: 'APP_GUARD',
-        useClass: AuthGuard,
-    }],
+    providers: [
+        AppService,
+        {
+            provide: 'APP_GUARD',
+            useClass: AuthGuard,
+        },
+        { // 全局缓存每个端点
+            provide: APP_INTERCEPTOR,
+            useClass: CacheInterceptor,
+        },
+    ],
 })
 export class AppModule {
 }

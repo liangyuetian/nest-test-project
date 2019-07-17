@@ -1,7 +1,7 @@
 import {
     Controller,
     UseGuards, Get, Post, HttpStatus, Param, Body, Req, Res, Next, SetMetadata, UseInterceptors,
-    Query,
+    Query, CacheInterceptor,
     Headers, Header, UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -12,6 +12,7 @@ import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
 import { CatsVo } from './vo/cats.vo';
 
+// @UseInterceptors(CacheInterceptor) // 缓存接口
 // @UseInterceptors(LoggingInterceptor)
 @Controller('cats')
 @UseGuards(RolesGuard)
