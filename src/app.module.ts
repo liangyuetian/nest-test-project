@@ -9,6 +9,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PhotoModule } from './photo/photo.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
@@ -26,7 +27,8 @@ import { PhotoModule } from './photo/photo.module';
             ttl: 5, // seconds
             max: 10, // 缓存中的最大项目数
         }),
-        PhotoModule],
+        PhotoModule,
+        LoggerModule],
     controllers: [AppController, UserController],
     providers: [
         AppService,

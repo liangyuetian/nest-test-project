@@ -11,13 +11,17 @@ import { Request, Response, NextFunction } from 'express';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
 import { CatsVo } from './vo/cats.vo';
+import { CustomLoggerService } from '../logger/custom.logger.service';
 
 // @UseInterceptors(CacheInterceptor) // 缓存接口
 // @UseInterceptors(LoggingInterceptor)
 @Controller('cats')
 @UseGuards(RolesGuard)
 export class CatsController {
-    constructor(private readonly connection: Connection) {
+    constructor(
+        private readonly connection: Connection,
+        private readonly customLoggerService: CustomLoggerService,
+        ) {
 
     }
 
@@ -33,6 +37,7 @@ export class CatsController {
         //     path: '/',
         //     query,
         // });
+        // this.customLoggerService.log('cats 触发');
         res.status(HttpStatus.OK).send({
             title: 'cats',
             path: '/',

@@ -1,10 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { CustomLoggerService } from './logger/custom.logger.service';
 
 async function bootstrap() {
     const port = 3000;
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {
+        logger: false, // 关闭默认日志
+    });
+    app.useLogger(app.get(CustomLoggerService));
     app.useGlobalPipes(new ValidationPipe({
         // disableErrorMessages: true, // 禁用详细错误
         // whitelist: true, // 剥离多余参数
