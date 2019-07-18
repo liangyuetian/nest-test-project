@@ -20,8 +20,7 @@ import { CustomLoggerService } from '../logger/custom.logger.service';
 export class CatsController {
     constructor(
         private readonly connection: Connection,
-        private readonly customLoggerService: CustomLoggerService,
-        ) {
+    ) {
 
     }
 
@@ -48,7 +47,7 @@ export class CatsController {
     @Get('/:id')
     @SetMetadata('roles', ['admin', 'user'])
     getCat(@Param('id') id: string) {
-        console.log(id);
+        CustomLoggerService.log(`请求了cat/:id接口，参数为: ${id}`);
         return `哈哈，这是一个${id}`;
     }
 
@@ -80,8 +79,9 @@ export class CatsController {
     ) {
         // console.log('file', file);
         // console.log('file-req', req);
+        CustomLoggerService.debug('');
         res.status(HttpStatus.OK).json({
-            msg: '上传成功',
+            msg: '上传成功 ',
         });
         // next((err) => {
         //     console.log('错了', err);

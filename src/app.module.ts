@@ -28,7 +28,8 @@ import { LoggerModule } from './logger/logger.module';
             max: 10, // 缓存中的最大项目数
         }),
         PhotoModule,
-        LoggerModule],
+        LoggerModule,
+    ],
     controllers: [AppController, UserController],
     providers: [
         AppService,
