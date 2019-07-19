@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PhotoModule } from './photo/photo.module';
 import { LoggerModule } from './logger/logger.module';
+import { AssetModule } from './asset/asset.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
@@ -29,6 +30,7 @@ import { LoggerModule } from './logger/logger.module';
         }),
         PhotoModule,
         LoggerModule,
+        AssetModule,
     ],
     controllers: [AppController, UserController],
     providers: [
