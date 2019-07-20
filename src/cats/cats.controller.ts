@@ -12,6 +12,9 @@ import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
 import { CatsVo } from './vo/cats.vo';
 import { CustomLoggerService } from '../logger/custom.logger.service';
+import { Observable } from 'rxjs';
+import { AxiosResponse } from 'axios';
+import { CatsService } from './cats.service';
 
 // @UseInterceptors(CacheInterceptor) // 缓存接口
 // @UseInterceptors(LoggingInterceptor)
@@ -20,6 +23,7 @@ import { CustomLoggerService } from '../logger/custom.logger.service';
 export class CatsController {
     constructor(
         private readonly connection: Connection,
+        private readonly catsService: CatsService,
     ) {
 
     }
@@ -86,5 +90,9 @@ export class CatsController {
         // next((err) => {
         //     console.log('错了', err);
         // });
+    }
+
+    getAssetQuery() {
+        this.catsService.getAssetQuery();
     }
 }

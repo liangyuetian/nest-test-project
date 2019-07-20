@@ -1,4 +1,4 @@
-import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor, HttpModule } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -15,6 +15,12 @@ import { ConfigModule } from './config/config.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
+        HttpModule.registerAsync({
+            useFactory: () => ({
+                timeout: 5000,
+                maxRedirects: 5,
+            }),
+        }),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: 'localhost',

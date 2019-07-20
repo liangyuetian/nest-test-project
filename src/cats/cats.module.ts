@@ -3,6 +3,7 @@ import { CatsController } from './cats.controller';
 import { CatsMockController } from './cats.mock.controller';
 // import { RolesGuard } from '../guard/roles.guard';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
+import { CatsService } from './cats.service';
 
 @Module({
     controllers: [CatsController],
@@ -19,6 +20,7 @@ import { LoggingInterceptor } from '../interceptor/logging.interceptor';
             provide: CatsController,
             useValue: CatsMockController,
         },
+        CatsService,
     ],
 })
 export class CatsModule {
