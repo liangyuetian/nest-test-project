@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import * as compression from 'compression';
 import { AppModule } from './app.module';
 import { CustomLoggerService } from './logger/custom.logger.service';
 
@@ -8,6 +9,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: false, // 关闭默认日志
     });
+    app.use(compression()); // 开启gzip
     app.useLogger(app.get(CustomLoggerService));
     app.useGlobalPipes(new ValidationPipe({
         // disableErrorMessages: true, // 禁用详细错误
