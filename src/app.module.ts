@@ -12,14 +12,13 @@ import { PhotoModule } from './photo/photo.module';
 import { LoggerModule } from './logger/logger.module';
 import { AssetModule } from './asset/asset.module';
 import { ConfigModule } from './config/config.module';
+import { PoetryModule } from './poetry/poetry.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
-        HttpModule.registerAsync({
-            useFactory: () => ({
-                timeout: 5000,
-                maxRedirects: 5,
-            }),
+        HttpModule.register({
+            timeout: 5000,
+            maxRedirects: 5,
         }),
         TypeOrmModule.forRoot({
             type: 'mysql',
@@ -39,6 +38,7 @@ import { ConfigModule } from './config/config.module';
         LoggerModule,
         AssetModule,
         ConfigModule,
+        PoetryModule,
     ],
     controllers: [AppController, UserController],
     providers: [

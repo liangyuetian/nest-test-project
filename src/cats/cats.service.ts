@@ -11,7 +11,7 @@ export class CatsService {
     ) {
         const url = 'https://raw.githubusercontent.com/soyaine/FE-Practice/f438d3bdf099461f88322b1b1f20c9d58f66f1ec/TangPoetryCut.json';
         this.httpService.get(url).subscribe(data => {
-            console.log(data);
+            // console.log(data);
         });
     }
 
