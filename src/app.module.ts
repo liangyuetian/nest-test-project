@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { PhotoModule } from './photo/photo.module';
 import { LoggerModule } from './logger/logger.module';
 import { AssetModule } from './asset/asset.module';
+import { ConfigModule } from './config/config.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
@@ -31,6 +32,7 @@ import { AssetModule } from './asset/asset.module';
         PhotoModule,
         LoggerModule,
         AssetModule,
+        ConfigModule,
     ],
     controllers: [AppController, UserController],
     providers: [
