@@ -4,6 +4,8 @@ import * as compression from 'compression';
 import { AppModule } from './app.module';
 import { CustomLoggerService } from './logger/custom.logger.service';
 
+declare const module: any;
+
 async function bootstrap() {
     const port = 3000;
     const app = await NestFactory.create(AppModule, {
@@ -25,6 +27,11 @@ async function bootstrap() {
     await app.listen(port, () => {
         console.log(`http://localhost:${port}`);
     });
+
+    if (module.hot) {
+        module.hot.accept();
+        module.hot.dispose(() => app.close());
+    }
 }
 
 bootstrap();
