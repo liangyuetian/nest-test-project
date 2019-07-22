@@ -20,8 +20,8 @@ export class AssetController {
         @Res() res: Response,
         @Next() next: NextFunction,
     ) {
-        const {user, status } = body;
-        const sql = `insert into asset(number,user,status) values('${body.number}','${user}',${status});`
+        const { user, status } = body;
+        const sql = `insert into asset(number,user,status) values('${body.number}','${user}',${status});`;
         this.connection.query(sql).then(list => {
             res.status(HttpStatus.OK).json({
                 code: 1000,
@@ -39,7 +39,8 @@ export class AssetController {
         @Res() res: Response,
         @Next() next: NextFunction,
     ) {
-        this.connection.query('select * from asset').then(list => {
+        const sql = 'select * from asset';
+        this.connection.query(sql).then(list => {
             res.status(HttpStatus.OK).json({
                 code: 1000,
                 msg: '',
