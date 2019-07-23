@@ -14,7 +14,7 @@ export class PhotoController {
         @Res() res: Response,
         @Next() next: NextFunction,
     ) {
-        this.photoService.findAll('select * from user').then(data => {
+        this.photoService.findAll().then(data => {
             res.status(HttpStatus.OK).json({
                 data,
             });

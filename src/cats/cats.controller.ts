@@ -41,6 +41,10 @@ export class CatsController {
         //     query,
         // });
         // this.customLoggerService.log('cats 触发');
+        // res.header({ // 设置headers
+        //     qa: 12,
+        // });
+        // res.setHeader('Connection', 'keep-alive'); // 设置headers
         res.status(HttpStatus.OK).send({
             title: 'cats',
             path: '/',

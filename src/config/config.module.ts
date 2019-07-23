@@ -1,10 +1,11 @@
-import * as path from 'path';
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigService } from './config.service';
+
 @Module({
     providers: [{
         provide: ConfigService,
-        useValue: new ConfigService(`${path.join(__dirname, process.env.NODE_ENV)}.env`),
+        useValue: new ConfigService(`${join(__dirname, process.env.NODE_ENV)}.env`),
     }],
     exports: [ConfigService],
 })

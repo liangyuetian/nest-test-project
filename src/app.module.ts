@@ -1,4 +1,5 @@
 import { Module, CacheModule, CacheInterceptor, HttpModule } from '@nestjs/common';
+// import { GraphQLModule } from '@nestjs/graphql';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -20,6 +21,9 @@ import { PoetryModule } from './poetry/poetry.module';
             timeout: 5000,
             maxRedirects: 5,
         }),
+        // GraphQLModule.forRoot({
+        //     typePaths: ['./**/*.graphql'],
+        // }),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: 'localhost',

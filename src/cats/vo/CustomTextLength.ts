@@ -2,7 +2,7 @@ import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments 
 
 @ValidatorConstraint({ name: 'customText', async: false })
 export class CustomTextLength {
-    validate(text: string, args: ValidationArguments) {
+    validate(text: string = '', args: ValidationArguments) {
         return text.length > 1 && text.length < 10; // for async validations you must return a Promise<boolean> here
     }
 
