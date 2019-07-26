@@ -4,10 +4,11 @@ import {
     Query, CacheInterceptor,
     Headers, Header, UploadedFile,
 } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Connection } from 'typeorm';
+import * as fs from 'fs';
 import { RolesGuard } from '../guard/roles.guard';
-import { Request, Response, NextFunction } from 'express';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
 import { CatsVo } from './vo/cats.vo';
@@ -52,11 +53,13 @@ export class CatsController {
         });
     }
 
-    @Get('/:id')
+    @Get('detail/:id')
     @SetMetadata('roles', ['admin', 'user'])
-    getCat(@Param('id') id: string) {
+    getCat(
+        @Param('id') id: string,
+    ) {
         CustomLoggerService.log(`请求了cat/:id接口，参数为: ${id}`);
-        return `哈哈，这是一个${id}`;
+        return `detail/${id}`;
     }
 
     @Post()
@@ -77,6 +80,22 @@ export class CatsController {
         });
     }
 
+    @Post('steam')
+    @Header('cats', 'steam')
+    async sendSteam(
+        @Body() body,
+        @Query() query,
+        @Req() req: Request,
+        @Res() res: Response,
+        @Next() next: NextFunction,
+    ) {
+        res.status(HttpStatus.OK).json({
+            code: 1000,
+            msg: '哈哈，保存成功',
+            body,
+        });
+    }
+
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
     uploadFile(
@@ -94,9 +113,5 @@ export class CatsController {
         // next((err) => {
         //     console.log('错了', err);
         // });
-    }
-
-    getAssetQuery() {
-        this.catsService.getAssetQuery();
     }
 }
