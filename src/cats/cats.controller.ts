@@ -8,6 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Connection } from 'typeorm';
 import * as fs from 'fs';
+import { join } from 'path';
 import { RolesGuard } from '../guard/roles.guard';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { Cats } from './cats.decorator';
@@ -46,11 +47,15 @@ export class CatsController {
         //     qa: 12,
         // });
         // res.setHeader('Connection', 'keep-alive'); // 设置headers
-        res.status(HttpStatus.OK).send({
-            title: 'cats',
-            path: '/',
-            query,
-        });
+
+        setTimeout(() => {
+            CustomLoggerService.log('暂停1s');
+            res.status(HttpStatus.OK).send({
+                title: 'cats',
+                path: '/',
+                query,
+            });
+        }, 1000);
     }
 
     @Get('detail/:id')
@@ -58,7 +63,7 @@ export class CatsController {
     getCat(
         @Param('id') id: string,
     ) {
-        CustomLoggerService.log(`请求了cat/:id接口，参数为: ${id}`);
+        CustomLoggerService.log(`请求了cat/detail/:id接口，参数为: ${id}`);
         return `detail/${id}`;
     }
 
@@ -89,11 +94,22 @@ export class CatsController {
         @Res() res: Response,
         @Next() next: NextFunction,
     ) {
-        res.status(HttpStatus.OK).json({
-            code: 1000,
-            msg: '哈哈，保存成功',
-            body,
+        // res.status(HttpStatus.OK).json({
+        //     code: 1000,
+        //     msg: '哈哈，保存成功',
+        //     body,
+        // });
+        res.status(HttpStatus.OK).write('1', 'uft-8', (data) => {
+            console.log('1', data);
         });
+        setTimeout(() => {
+            res.status(HttpStatus.OK).write('1000', 'uft-8', (data) => {
+                console.log('1000', data);
+            });
+        }, 1000);
+        setTimeout(() => {
+            res.status(HttpStatus.OK).end();
+        }, 2000);
     }
 
     @Post('upload')

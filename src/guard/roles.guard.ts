@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 
 function validateRequest(request: Request, context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    console.log('roles');
     return true;
 }
 

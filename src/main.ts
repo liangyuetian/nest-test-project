@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import * as compression from 'compression';
+// import * as fs from 'fs';
+// import { join } from 'path';
+// import * as http2 from 'spdy';
 import { AppModule } from './app.module';
 import { CustomLoggerService } from './logger/custom.logger.service';
 
@@ -24,10 +27,15 @@ async function bootstrap() {
         },
     }));
     // app.enableShutdownHooks(); // 监听应用程序关闭
+    // const pwd = join(__dirname, '../src');
+    // const options = {
+    //     key: fs.readFileSync(join(pwd, './server.key')),
+    //     cert: fs.readFileSync(join(pwd, './server.crt')),
+    // };
     await app.listen(port, () => {
         console.log(`http://localhost:${port}`);
     });
-
+    // http2.createServer(options, app).listen(port);
     if (module.hot) {
         module.hot.accept();
         module.hot.dispose(() => app.close());
