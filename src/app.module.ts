@@ -1,19 +1,19 @@
-import { Module, CacheModule, CacheInterceptor, HttpModule } from '@nestjs/common';
+import {CacheInterceptor, CacheModule, HttpModule, Module} from '@nestjs/common';
 // import { GraphQLModule } from '@nestjs/graphql';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserController } from './users/users.controller';
-import { CatsModule } from './cats/cats.module';
-import { AuthGuard } from './guard/auth.guard';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { PhotoModule } from './photo/photo.module';
-import { LoggerModule } from './logger/logger.module';
-import { AssetModule } from './asset/asset.module';
-import { ConfigModule } from './config/config.module';
-import { PoetryModule } from './poetry/poetry.module';
+import {APP_INTERCEPTOR} from '@nestjs/core';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {UserController} from './users/users.controller';
+import {CatsModule} from './cats/cats.module';
+import {AuthGuard} from './guard/auth.guard';
+import {AuthModule} from './auth/auth.module';
+import {UsersModule} from './users/users.module';
+import {PhotoModule} from './photo/photo.module';
+import {LoggerModule} from './logger/logger.module';
+import {AssetModule} from './asset/asset.module';
+import {ConfigModule} from './config/config.module';
+import {PoetryModule} from './poetry/poetry.module';
 
 @Module({
     imports: [CatsModule, AuthModule, UsersModule,
@@ -34,9 +34,13 @@ import { PoetryModule } from './poetry/poetry.module';
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true,
         }),
-        CacheModule.register({
-            ttl: 5, // seconds
-            max: 10, // 缓存中的最大项目数
+        CacheModule.registerAsync({
+            useFactory: () => {
+                return {
+                    ttl: 5, // seconds
+                    max: 10, // 缓存中的最大项目数
+                };
+            },
         }),
         PhotoModule,
         LoggerModule,
