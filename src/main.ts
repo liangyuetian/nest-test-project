@@ -7,9 +7,9 @@ import { CustomLoggerService } from './logger/custom.logger.service';
 declare const module: any;
 
 async function bootstrap() {
-    const port = 3000;
+    const port = 3789;
     const app = await NestFactory.create(AppModule, {
-        logger: false, // 关闭默认日志
+        // logger: false, // 关闭默认日志
     });
     app.use(compression()); // 开启gzip
     app.useLogger(app.get(CustomLoggerService));
