@@ -2,9 +2,9 @@ import {CacheInterceptor, CacheModule, HttpModule, Module} from '@nestjs/common'
 // import { GraphQLModule } from '@nestjs/graphql';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
-import {UserController} from './users/users.controller';
+import {ConfigModule} from '@nestjs/config';
+import {DatabaseModule} from './database/database.module';
+
 import {CatsModule} from './cats/cats.module';
 import {AuthGuard} from './guard/auth.guard';
 import {AuthModule} from './auth/auth.module';
@@ -12,11 +12,21 @@ import {UsersModule} from './users/users.module';
 import {PhotoModule} from './photo/photo.module';
 import {LoggerModule} from './logger/logger.module';
 import {AssetModule} from './asset/asset.module';
-import {ConfigModule} from './config/config.module';
+// import {ConfigModule} from './config/config.module';
 import {PoetryModule} from './poetry/poetry.module';
 
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {ConfigService} from '@nestjs/config';
+
+import {mysqlConfig} from './config/database.config';
+
 @Module({
-    imports: [CatsModule, AuthModule, UsersModule,
+    imports: [
+        ConfigModule,
+        CatsModule,
+        AuthModule,
+        UsersModule,
         HttpModule.register({
             timeout: 5000,
             maxRedirects: 5,
@@ -24,15 +34,10 @@ import {PoetryModule} from './poetry/poetry.module';
         // GraphQLModule.forRoot({
         //     typePaths: ['./**/*.graphql'],
         // }),
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: '123456',
-            database: 'nestjs',
-            entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true,
+        ConfigModule.forRoot({
+            envFilePath: ['./config/.env'],
+            isGlobal: true,
+            load: [mysqlConfig],
         }),
         CacheModule.registerAsync({
             useFactory: () => {
@@ -45,12 +50,25 @@ import {PoetryModule} from './poetry/poetry.module';
         PhotoModule,
         LoggerModule,
         AssetModule,
-        ConfigModule,
         PoetryModule,
+        DatabaseModule.forRoot(),
+        // TypeOrmModule.forRoot({
+        //     type: 'mysql',
+        //     host: 'localhost',
+        //     port: 3306,
+        //     username: 'root',
+        //     password: '123456',
+        //     database: 'nestjs',
+        //     entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        //     synchronize: true,
+        // })
     ],
-    controllers: [AppController, UserController],
+    controllers: [
+        AppController
+    ],
     providers: [
         AppService,
+        ConfigService,
         {
             provide: 'APP_GUARD',
             useClass: AuthGuard,
