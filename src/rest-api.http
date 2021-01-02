@@ -1,0 +1,2 @@
+GET http://localhost:3789/cats?1=2
+Accept: application/json
