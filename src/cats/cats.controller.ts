@@ -20,7 +20,7 @@ import { CatsService } from './cats.service';
 // @UseInterceptors(CacheInterceptor) // 缓存接口
 // @UseInterceptors(LoggingInterceptor)
 @Controller('cats')
-@UseGuards(RolesGuard)
+// @UseGuards(RolesGuard)
 export class CatsController {
     constructor(
         private readonly connection: Connection,
@@ -32,7 +32,7 @@ export class CatsController {
     @Get()
     @SetMetadata('roles', ['admin'])
     getCats(
-        @Query() query: CatsVo,
+        @Query() query,
         @Req() req: Request,
         @Res() res: Response,
         @Next() next: NextFunction) {
@@ -84,7 +84,7 @@ export class CatsController {
     @Header('cats', 'steam')
     async sendSteam(
         @Body() body,
-        @Query() query,
+        @Query() query: CatsVo,
         @Req() req: Request,
         @Res() res: Response,
         @Next() next: NextFunction,
